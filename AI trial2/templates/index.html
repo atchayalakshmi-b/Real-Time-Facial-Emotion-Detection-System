@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Emotion Analytics Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Chart.js + DataLabels -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Emotion Analytics Dashboard</h1>
+    <div class="controls">
+      <label for="filterSelect">Filter</label>
+      <select id="filterSelect">
+        <option value="none" selected>None</option>
+        <option value="grayscale">Grayscale</option>
+        <option value="sepia">Sepia</option>
+        <option value="cartoon">Cartoon</option>
+      </select>
+
+      <button id="themeToggle">🌓 Theme</button>
+      <a id="downloadBtn" href="/download_report">⬇️ Download CSV</a>
+      <button id="summaryBtn">📊 Session Summary</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="left">
+      <div class="video-wrap">
+        <img id="videoFeed" alt="Live feed" src="{{ url_for('video_feed') }}" />
+        <div id="dominantPill" class="pill">Dominant: <span id="dominantText">—</span></div>
+      </div>
+      <div class="small-info">
+        <div id="countsBrief">Detected: —</div>
+      </div>
+    </section>
+
+    <section class="right">
+      <div class="card">
+        <h3>Emotion Distribution</h3>
+        <canvas id="pieChart"></canvas>
+      </div>
+
+      <div class="card">
+        <h3>Live Timeline (recent)</h3>
+        <canvas id="timelineChart"></canvas>
+      </div>
+
+      <div class="card quote-card">
+        <h3>Quote for your mood</h3>
+        <p id="quoteBox">—</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Session summary modal (simple) -->
+  <div id="summaryModal" class="modal hidden">
+    <div class="modal-content">
+      <button id="closeSummary">✖</button>
+      <h2>Session Summary</h2>
+      <pre id="summaryText">Loading...</pre>
+    </div>
+  </div>
+
+  <footer>
+    <small>Built with DeepFace • OpenCV • Flask</small>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
